@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 // import { Link } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
 import './Posts.css';
 
 import Post from '../../../components/Post/Post';
+import FullPost from '../FullPost/FullPost';
 
 class Posts extends Component {
     constructor(props) {
@@ -51,7 +53,7 @@ class Posts extends Component {
     }
 
     postSelectedHandler = (id) => {
-        this.props.history.push({pathname: '/post/' + id})
+        this.props.history.push({pathname: this.props.match.url + id})
         //this.props.history.push('/post' + id)
     }
 
@@ -88,12 +90,20 @@ class Posts extends Component {
             })
 
         return (
-            <section className="Posts">
-                {this.state.isLoadingPost
-                    ? <p className='loader'>Loading posts...</p>
-                    : postsList
-                }
-            </section>
+            <div>
+                <section className="Posts">
+                    {this.state.isLoadingPost
+                        ? <p className='loader'>Loading posts...</p>
+                        : postsList
+                    }
+                </section>
+                <Route path={this.props.match.url + ':id'} exact component={FullPost} /> 
+                {/* 
+                 * this.props.match.url obtiene la ruta del componente Route padre,
+                 * es decir, para ser rutas anidadas, automaticamente ya agarra la ruta anterior
+                 * por eso es que, al definir la ruta para cada post, solo deberia ser /post/:id
+                 */}
+            </div>
         )
     }
 }

@@ -16,8 +16,16 @@ class FullPost extends Component {
     }
 
     componentDidMount() {
+        this.loadData()
+    }
+
+    componentDidUpdate() {
+        this.loadData()
+    }
+
+    loadData() {
         if (this.props.match.params.id) {
-            if ( !this.state.loadedPost || (this.state.loadedPost && this.state.loadedPost.id !== this.props.match.params.id) ) {
+            if ( !this.state.loadedPost || (this.state.loadedPost && this.state.loadedPost.id !== +this.props.match.params.id) ) {
                 // esta condicion es para evitar que haga request infinitos al servidor,
                 // ya que, el metodo DidUpdate se esta ejecutando indefinidamente
                 axios.get('/posts/' + this.props.match.params.id, {cancelToken: this.sourceReq.token})
@@ -37,7 +45,6 @@ class FullPost extends Component {
                 this.setState({loadedPost: null})
             }
         }
-
     }
 
     componentWillUnmount() {
@@ -49,7 +56,7 @@ class FullPost extends Component {
     // tambien es posible ejecutar un delete al servidor cuando se requiera eliminar 
     // registros de una base de datos
     deletePostHandler = () => {
-        console.log(this.props.match.params.id)
+        //console.log(this.props.match.params.id)
         axios.delete('/posts/' + this.props.match.params.id)
             .then(response => {
                 console.log(response)
