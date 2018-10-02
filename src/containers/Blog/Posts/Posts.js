@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+// import { Link } from 'react-router-dom';
+
+import './Posts.css';
 
 import Post from '../../../components/Post/Post';
 
@@ -13,7 +16,7 @@ class Posts extends Component {
     }
 
     componentDidMount() {
-        console.log(this.props)
+
         axios.get('/posts')
             .then(response => {
                 if (response.status === 200) {
@@ -37,7 +40,8 @@ class Posts extends Component {
     }
 
     postSelectedHandler = (id) => {
-        this.setState({postSelected: id})
+        this.props.history.push({pathname: '/post/' + id})
+        //this.props.history.push('/post' + id)
     }
 
 
@@ -57,15 +61,20 @@ class Posts extends Component {
         let postsList = this.state.error ? 
             <h3 style={{textAlign: 'center'}}>Something went wrong <p>{this.state.errorDetalle}</p></h3> : 
             this.state.posts.map(p => {
-                return <Post 
-                            key={p.id} 
-                            title={p.title} author={p.author} clicked={() => this.postSelectedHandler(p.id)} />
+                return (
+                    //<Link to={'/post/' + p.id} key={p.id}>
+                        <Post 
+                            key={p.id}
+                            title={p.title} author={p.author} 
+                            clicked={() => this.postSelectedHandler(p.id)} />
+                    //</Link>
+                )
             })
 
         return (
             <section className="Posts">
                 {this.state.isLoadingPost
-                    ? <p>Loading posts...</p>
+                    ? <p className='loader'>Loading posts...</p>
                     : postsList
                 }
             </section>

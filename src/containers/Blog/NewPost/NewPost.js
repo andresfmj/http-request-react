@@ -13,7 +13,7 @@ class NewPost extends Component {
     }
 
     componentDidMount() {
-        console.log(this.props)
+        //console.log(this.props)
     }
 
     postDataHandler () {
@@ -36,6 +36,7 @@ class NewPost extends Component {
     }
 
     render () {
+        //console.log(this.props.location)
         return (
             <div className="NewPost">
                 <h1>Add a Post</h1>

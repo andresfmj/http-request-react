@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Route, NavLink } from 'react-router-dom';
 
 
-import Posts from '../Blog/Posts/Posts';
-import NewPost from '../Blog/NewPost/NewPost';
+import Posts from './Posts/Posts';
+import NewPost from './NewPost/NewPost';
+import FullPost from './FullPost/FullPost';
 
 import './Blog.css';
 
@@ -14,12 +15,12 @@ class Blog extends Component {
                 <header>
                     <nav>
                         <ul>
-                            <li><Link to='/'>Home</Link></li>
-                            <li><Link to={{
+                            <li><NavLink to='/' exact activeClassName='my-active-classita' activeStyle={{color: '#f29e3e', textDecoration: 'underline'}}>Home</NavLink></li>
+                            <li><NavLink to={{
                                 pathname: '/new-post',
                                 hash: '#create',
                                 search: '?action=create'
-                            }}>New Post</Link></li>
+                            }}>New Post</NavLink></li>
                         </ul>
                     </nav>
                 </header>
@@ -27,6 +28,7 @@ class Blog extends Component {
                 <Route path='/new-post' render={() => <h2>This is the new post page</h2>} /> */}
                 <Route path='/' exact component={Posts} />
                 <Route path='/new-post' exact component={NewPost} />
+                <Route path='/post/:id' exact component={FullPost} />
             </div>
         );
     }

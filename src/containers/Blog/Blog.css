@@ -25,6 +25,7 @@
 }
 
 .Blog ul li a:hover,
-.Blog ul li a:active {
+.Blog ul li a:active,
+.Blog ul li a.active {
     color: #dc7821;
 }
