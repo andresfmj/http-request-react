@@ -53,7 +53,7 @@ class Posts extends Component {
     }
 
     postSelectedHandler = (id) => {
-        this.props.history.push({pathname: this.props.match.url + id})
+        this.props.history.push({pathname: this.props.match.url + '/' + id})
         //this.props.history.push('/post' + id)
     }
 
@@ -97,7 +97,7 @@ class Posts extends Component {
                         : postsList
                     }
                 </section>
-                <Route path={this.props.match.url + ':id'} exact component={FullPost} /> 
+                <Route path={this.props.match.url + '/:id'} exact component={FullPost} /> 
                 {/* 
                  * this.props.match.url obtiene la ruta del componente Route padre,
                  * es decir, para ser rutas anidadas, automaticamente ya agarra la ruta anterior
