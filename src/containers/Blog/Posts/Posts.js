@@ -7,17 +7,23 @@ import './Posts.css';
 import Post from '../../../components/Post/Post';
 
 class Posts extends Component {
-    state = {
-        posts: [],
-        isLoadingPost: true,
-        postSelected: null,
-        error: false,
-        errorDetalle: null
+    constructor(props) {
+        super(props)
+        this.state = {
+            posts: [],
+            isLoadingPost: true,
+            postSelected: null,
+            error: false,
+            errorDetalle: null
+        }
+
+        this.cancelToken = axios.CancelToken
+        this.sourceReq = this.cancelToken.source()
     }
 
     componentDidMount() {
 
-        axios.get('/posts')
+        axios.get('/posts', {cancelToken: this.sourceReq.token})
             .then(response => {
                 if (response.status === 200) {
                     const posts = response.data.slice(0, 4)
@@ -31,11 +37,16 @@ class Posts extends Component {
                 } 
             })
             .catch(error => {
-                this.setState({
-                    error: true,
-                    errorDetalle: error.message,
-                    isLoadingPost: false
-                })
+                if (axios.isCancel(error)) {
+                    console.log('Request in [Posts] Component is canceled', error.message)
+                } else {
+                    console.log('[Posts] ', error.message)
+                    this.setState({
+                        error: true,
+                        errorDetalle: error.message,
+                        isLoadingPost: false
+                    })
+                }
             })
     }
 
@@ -55,6 +66,11 @@ class Posts extends Component {
             posts: posts,
             postSelected: null
         })
+    }
+
+    componentWillUnmount() {
+        //console.log('[FullPost] WillUnmount')
+        this.sourceReq.cancel('[Posts] Operation canceled by the user.')
     }
 
     render() {
