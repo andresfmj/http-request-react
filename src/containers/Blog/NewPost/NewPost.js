@@ -12,6 +12,10 @@ class NewPost extends Component {
         isSending: false
     }
 
+    componentDidMount() {
+        console.log(this.props)
+    }
+
     postDataHandler () {
         this.setState({isSending: true})
 
