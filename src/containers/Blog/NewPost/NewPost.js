@@ -27,14 +27,17 @@ class NewPost extends Component {
             author: this.state.author
         })
         .then(response => {
-            console.log(response)
-            this.setState({
-                title: '',
-                content: '',
-                author: 'Andres',
-                isSending: false,
-                submitted: true
-            })
+            //console.log(response)
+            // this.setState({
+            //     title: '',
+            //     content: '',
+            //     author: 'Andres',
+            //     isSending: false,
+            //     submitted: true
+            // })
+            this.props.history.push('/posts') // push permite utilizar el boton atras del navegador
+            //this.props.history.replace('/posts') 
+            // replace lo que hace es reemplazar el contenido, pero no se pueda utilizar el boton atras
         })
     }
 
@@ -42,8 +45,8 @@ class NewPost extends Component {
         //console.log(this.props.location)
         let redirect = null
         if (this.state.submitted)
-            redirect = <Redirect to='/posts' />
-
+            redirect = <Redirect to='/posts' /> 
+        
         return (
             <div className="NewPost">
                 {redirect}
